@@ -1,0 +1,729 @@
+/* ==========================================================================
+   estadias-app — estilos globais
+   UC00621 · Projeto Final · Estadias
+
+   Como usar: importa uma vez em src/main.jsx  →  import "./estadias.css";
+   Usa as classes abaixo com className="..." nos teus componentes.
+
+   ÍNDICE DE CLASSES (por componente sugerido)
+   --------------------------------------------------------------------------
+   Layout ........ .app, .container, .page-title, .section
+   Navbar ........ .navbar, .navbar__brand, .navbar__links, .navbar__link,
+                   .navbar__link--active, .navbar__badge
+   Filtros ....... .filtros, .filtros__campo, .filtros__label, .input, .select
+   Listagem ...... .grelha, .cartao, .cartao__imagem, .cartao__corpo,
+                   .cartao__titulo, .cartao__meta, .cartao__preco,
+                   .cartao__rodape, .cartao__favorito, .cartao__favorito--ativo
+   Detalhe ....... .detalhe, .detalhe__imagem, .detalhe__info,
+                   .detalhe__titulo, .detalhe__caracteristicas,
+                   .caracteristica, .detalhe__descricao
+   Formulário .... .form, .form__grupo, .form__label, .form__erro,
+                   .form__linha, .form__resumo, .input--invalido
+   Reservas ...... .lista-reservas, .reserva, .reserva__cabecalho,
+                   .reserva__dados, .reserva__total
+   Botões ........ .btn, .btn--primario, .btn--secundario, .btn--perigo,
+                   .btn--link, .btn--bloco
+   Feedback ...... .alerta, .alerta--sucesso, .alerta--erro, .alerta--info,
+                   .alerta--aviso, .estado, .estado--vazio, .spinner
+   Utilitários ... .estrelas, .etiqueta, .etiqueta--verde, .etiqueta--cinza,
+                   .texto-suave, .texto-centro, .mt-1/.mt-2/.mt-3, .oculto
+   ========================================================================== */
+
+/* ---------- 1. Variáveis ------------------------------------------------- */
+:root {
+  --cor-primaria: #0f766e;
+  --cor-primaria-escura: #0b5a54;
+  --cor-primaria-clara: #ccfbf1;
+  --cor-destaque: #f59e0b;
+  --cor-favorito: #e11d48;
+
+  --cor-texto: #1f2937;
+  --cor-texto-suave: #6b7280;
+  --cor-fundo: #f3f4f6;
+  --cor-superficie: #ffffff;
+  --cor-borda: #d1d5db;
+
+  --cor-sucesso: #15803d;
+  --cor-sucesso-fundo: #dcfce7;
+  --cor-erro: #b91c1c;
+  --cor-erro-fundo: #fee2e2;
+  --cor-info: #1d4ed8;
+  --cor-info-fundo: #dbeafe;
+  --cor-aviso: #92400e;
+  --cor-aviso-fundo: #fef3c7;
+
+  --raio: 10px;
+  --raio-pequeno: 6px;
+  --sombra: 0 1px 3px rgba(0, 0, 0, 0.08), 0 1px 2px rgba(0, 0, 0, 0.06);
+  --sombra-forte: 0 8px 20px rgba(0, 0, 0, 0.12);
+  --transicao: 0.18s ease;
+
+  --espaco-1: 0.5rem;
+  --espaco-2: 1rem;
+  --espaco-3: 1.5rem;
+  --espaco-4: 2rem;
+
+  --largura-max: 1140px;
+}
+
+/* ---------- 2. Reset e base --------------------------------------------- */
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  margin: 0;
+  font-family: system-ui, -apple-system, "Segoe UI", Roboto, Arial, sans-serif;
+  font-size: 16px;
+  line-height: 1.5;
+  color: var(--cor-texto);
+  background: var(--cor-fundo);
+}
+
+img {
+  max-width: 100%;
+  display: block;
+}
+
+a {
+  color: var(--cor-primaria);
+}
+
+h1,
+h2,
+h3 {
+  line-height: 1.25;
+  margin: 0 0 var(--espaco-1);
+}
+
+p {
+  margin: 0 0 var(--espaco-1);
+}
+
+:focus-visible {
+  outline: 3px solid var(--cor-destaque);
+  outline-offset: 2px;
+}
+
+/* ---------- 3. Layout --------------------------------------------------- */
+.app {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+.container {
+  width: 100%;
+  max-width: var(--largura-max);
+  margin: 0 auto;
+  padding: 0 var(--espaco-2);
+}
+
+.section {
+  padding: var(--espaco-3) 0;
+}
+
+.page-title {
+  font-size: 1.75rem;
+  margin-bottom: var(--espaco-3);
+}
+
+/* ---------- 4. Navbar --------------------------------------------------- */
+.navbar {
+  background: var(--cor-primaria);
+  color: #fff;
+  box-shadow: var(--sombra);
+  position: sticky;
+  top: 0;
+  z-index: 10;
+}
+
+.navbar .container {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--espaco-2);
+  min-height: 60px;
+  flex-wrap: wrap;
+}
+
+.navbar__brand {
+  font-size: 1.25rem;
+  font-weight: 700;
+  color: #fff;
+  text-decoration: none;
+}
+
+.navbar__links {
+  display: flex;
+  gap: var(--espaco-1);
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.navbar__link {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  padding: 0.45rem 0.8rem;
+  border-radius: var(--raio-pequeno);
+  color: #fff;
+  text-decoration: none;
+  transition: background var(--transicao);
+}
+
+.navbar__link:hover {
+  background: rgba(255, 255, 255, 0.15);
+}
+
+/* Link ativo (NavLink do react-router adiciona a classe "active"). */
+.navbar__link--active,
+.navbar__link.active {
+  background: rgba(255, 255, 255, 0.25);
+  font-weight: 600;
+}
+
+/* Contador de favoritos / reservas */
+.navbar__badge {
+  min-width: 1.4rem;
+  padding: 0 0.4rem;
+  border-radius: 999px;
+  background: var(--cor-destaque);
+  color: #1f2937;
+  font-size: 0.75rem;
+  font-weight: 700;
+  text-align: center;
+}
+
+/* ---------- 5. Botões --------------------------------------------------- */
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.4rem;
+  padding: 0.6rem 1.1rem;
+  border: 1px solid transparent;
+  border-radius: var(--raio-pequeno);
+  font: inherit;
+  font-weight: 600;
+  text-decoration: none;
+  cursor: pointer;
+  transition: background var(--transicao), border-color var(--transicao),
+    transform var(--transicao);
+}
+
+.btn:active {
+  transform: translateY(1px);
+}
+
+.btn:disabled,
+.btn[aria-disabled="true"] {
+  opacity: 0.55;
+  cursor: not-allowed;
+  transform: none;
+}
+
+.btn--primario {
+  background: var(--cor-primaria);
+  color: #fff;
+}
+.btn--primario:hover:not(:disabled) {
+  background: var(--cor-primaria-escura);
+}
+
+.btn--secundario {
+  background: var(--cor-superficie);
+  color: var(--cor-primaria);
+  border-color: var(--cor-primaria);
+}
+.btn--secundario:hover:not(:disabled) {
+  background: var(--cor-primaria-clara);
+}
+
+.btn--perigo {
+  background: var(--cor-erro);
+  color: #fff;
+}
+.btn--perigo:hover:not(:disabled) {
+  background: #991b1b;
+}
+
+.btn--link {
+  background: none;
+  border: none;
+  padding: 0;
+  color: var(--cor-primaria);
+  text-decoration: underline;
+}
+
+.btn--bloco {
+  width: 100%;
+}
+
+/* ---------- 6. Formulários e campos ------------------------------------ */
+.input,
+.select,
+.textarea {
+  width: 100%;
+  padding: 0.55rem 0.75rem;
+  border: 1px solid var(--cor-borda);
+  border-radius: var(--raio-pequeno);
+  background: #fff;
+  font: inherit;
+  color: inherit;
+  transition: border-color var(--transicao), box-shadow var(--transicao);
+}
+
+.input:focus,
+.select:focus,
+.textarea:focus {
+  outline: none;
+  border-color: var(--cor-primaria);
+  box-shadow: 0 0 0 3px var(--cor-primaria-clara);
+}
+
+/* Campo com erro de validação: <input className="input input--invalido"> */
+.input--invalido {
+  border-color: var(--cor-erro);
+  background: #fff7f7;
+}
+.input--invalido:focus {
+  box-shadow: 0 0 0 3px var(--cor-erro-fundo);
+}
+
+.form {
+  background: var(--cor-superficie);
+  padding: var(--espaco-3);
+  border-radius: var(--raio);
+  box-shadow: var(--sombra);
+}
+
+.form__grupo {
+  margin-bottom: var(--espaco-2);
+}
+
+.form__label {
+  display: block;
+  margin-bottom: 0.3rem;
+  font-weight: 600;
+  font-size: 0.9rem;
+}
+
+/* Mensagem de erro por baixo do campo */
+.form__erro {
+  margin-top: 0.3rem;
+  color: var(--cor-erro);
+  font-size: 0.85rem;
+}
+
+/* Duas colunas (ex.: data de entrada + data de saída) */
+.form__linha {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: var(--espaco-2);
+}
+
+/* Caixa com o resumo (noites × preço = total) */
+.form__resumo {
+  margin: var(--espaco-2) 0;
+  padding: var(--espaco-2);
+  background: var(--cor-primaria-clara);
+  border-radius: var(--raio-pequeno);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-weight: 600;
+}
+
+/* ---------- 7. Filtros / pesquisa / ordenação --------------------------- */
+.filtros {
+  display: grid;
+  grid-template-columns: 2fr repeat(3, 1fr);
+  gap: var(--espaco-2);
+  align-items: end;
+  margin-bottom: var(--espaco-3);
+  padding: var(--espaco-2);
+  background: var(--cor-superficie);
+  border-radius: var(--raio);
+  box-shadow: var(--sombra);
+}
+
+.filtros__campo {
+  display: flex;
+  flex-direction: column;
+  gap: 0.3rem;
+}
+
+.filtros__label {
+  font-size: 0.8rem;
+  font-weight: 600;
+  color: var(--cor-texto-suave);
+  text-transform: uppercase;
+  letter-spacing: 0.03em;
+}
+
+/* Contador "12 alojamentos encontrados" */
+.filtros__resultado {
+  margin: 0 0 var(--espaco-2);
+  color: var(--cor-texto-suave);
+  font-size: 0.9rem;
+}
+
+/* ---------- 8. Listagem: grelha de cartões ------------------------------ */
+.grelha {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+  gap: var(--espaco-3);
+}
+
+.cartao {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  background: var(--cor-superficie);
+  border-radius: var(--raio);
+  box-shadow: var(--sombra);
+  overflow: hidden;
+  transition: transform var(--transicao), box-shadow var(--transicao);
+}
+
+.cartao:hover {
+  transform: translateY(-3px);
+  box-shadow: var(--sombra-forte);
+}
+
+/* Também serve para o placeholder quando item.imagem === null */
+.cartao__imagem {
+  width: 100%;
+  aspect-ratio: 16 / 10;
+  object-fit: cover;
+  background: linear-gradient(135deg, #e5e7eb, #f3f4f6);
+  color: var(--cor-texto-suave);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 2rem;
+}
+
+.cartao__corpo {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 0.35rem;
+  padding: var(--espaco-2);
+}
+
+.cartao__titulo {
+  font-size: 1.1rem;
+  margin: 0;
+}
+
+.cartao__meta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.4rem;
+  color: var(--cor-texto-suave);
+  font-size: 0.9rem;
+}
+
+.cartao__rodape {
+  margin-top: auto;
+  padding-top: var(--espaco-1);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--espaco-1);
+}
+
+.cartao__preco {
+  font-size: 1.15rem;
+  font-weight: 700;
+  color: var(--cor-primaria);
+}
+
+.cartao__preco small {
+  font-weight: 400;
+  color: var(--cor-texto-suave);
+}
+
+/* Botão do coração, sobreposto ao canto da imagem */
+.cartao__favorito {
+  position: absolute;
+  top: 0.6rem;
+  right: 0.6rem;
+  width: 2.4rem;
+  height: 2.4rem;
+  display: grid;
+  place-items: center;
+  border: none;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.92);
+  color: var(--cor-texto-suave);
+  font-size: 1.25rem;
+  line-height: 1;
+  cursor: pointer;
+  box-shadow: var(--sombra);
+  transition: transform var(--transicao), color var(--transicao);
+}
+
+.cartao__favorito:hover {
+  transform: scale(1.12);
+  color: var(--cor-favorito);
+}
+
+.cartao__favorito--ativo {
+  color: var(--cor-favorito);
+}
+
+/* ---------- 9. Detalhe do alojamento ------------------------------------ */
+.detalhe {
+  display: grid;
+  grid-template-columns: 3fr 2fr;
+  gap: var(--espaco-3);
+  align-items: start;
+}
+
+.detalhe__imagem {
+  width: 100%;
+  aspect-ratio: 16 / 10;
+  object-fit: cover;
+  border-radius: var(--raio);
+  background: #e5e7eb;
+  box-shadow: var(--sombra);
+}
+
+.detalhe__info {
+  background: var(--cor-superficie);
+  padding: var(--espaco-3);
+  border-radius: var(--raio);
+  box-shadow: var(--sombra);
+}
+
+.detalhe__titulo {
+  font-size: 1.6rem;
+}
+
+.detalhe__descricao {
+  margin: var(--espaco-2) 0;
+  color: var(--cor-texto);
+}
+
+.detalhe__caracteristicas {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--espaco-1);
+  list-style: none;
+  margin: var(--espaco-2) 0;
+  padding: 0;
+}
+
+/* wifi, piscina, animais, quartos, casas de banho… */
+.caracteristica {
+  padding: 0.3rem 0.7rem;
+  border-radius: 999px;
+  background: var(--cor-fundo);
+  font-size: 0.85rem;
+}
+
+.caracteristica--sim {
+  background: var(--cor-sucesso-fundo);
+  color: var(--cor-sucesso);
+}
+
+.caracteristica--nao {
+  background: var(--cor-fundo);
+  color: var(--cor-texto-suave);
+  text-decoration: line-through;
+}
+
+/* ---------- 10. As minhas reservas -------------------------------------- */
+.lista-reservas {
+  display: flex;
+  flex-direction: column;
+  gap: var(--espaco-2);
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.reserva {
+  background: var(--cor-superficie);
+  padding: var(--espaco-2) var(--espaco-3);
+  border-radius: var(--raio);
+  border-left: 5px solid var(--cor-primaria);
+  box-shadow: var(--sombra);
+  display: grid;
+  grid-template-columns: 1fr auto;
+  gap: var(--espaco-2);
+  align-items: center;
+}
+
+.reserva__cabecalho {
+  font-size: 1.1rem;
+  font-weight: 700;
+}
+
+.reserva__dados {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.25rem var(--espaco-3);
+  color: var(--cor-texto-suave);
+  font-size: 0.9rem;
+}
+
+.reserva__total {
+  font-size: 1.2rem;
+  font-weight: 700;
+  color: var(--cor-primaria);
+  text-align: right;
+}
+
+/* ---------- 11. Alertas, estados vazios, loading ----------------------- */
+.alerta {
+  padding: 0.75rem 1rem;
+  border-radius: var(--raio-pequeno);
+  border: 1px solid transparent;
+  margin-bottom: var(--espaco-2);
+  font-size: 0.95rem;
+}
+
+.alerta--sucesso {
+  background: var(--cor-sucesso-fundo);
+  color: var(--cor-sucesso);
+  border-color: #86efac;
+}
+.alerta--erro {
+  background: var(--cor-erro-fundo);
+  color: var(--cor-erro);
+  border-color: #fca5a5;
+}
+.alerta--info {
+  background: var(--cor-info-fundo);
+  color: var(--cor-info);
+  border-color: #93c5fd;
+}
+.alerta--aviso {
+  background: var(--cor-aviso-fundo);
+  color: var(--cor-aviso);
+  border-color: #fcd34d;
+}
+
+/* Bloco centrado: "A carregar…", "Sem resultados", "Ainda não tens reservas" */
+.estado {
+  padding: var(--espaco-4) var(--espaco-2);
+  text-align: center;
+  color: var(--cor-texto-suave);
+}
+
+.estado--vazio {
+  background: var(--cor-superficie);
+  border: 2px dashed var(--cor-borda);
+  border-radius: var(--raio);
+}
+
+.spinner {
+  width: 2.4rem;
+  height: 2.4rem;
+  margin: 0 auto var(--espaco-1);
+  border: 4px solid var(--cor-primaria-clara);
+  border-top-color: var(--cor-primaria);
+  border-radius: 50%;
+  animation: rodar 0.8s linear infinite;
+}
+
+@keyframes rodar {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+/* ---------- 12. Etiquetas, estrelas e utilitários ----------------------- */
+.etiqueta {
+  display: inline-block;
+  padding: 0.15rem 0.6rem;
+  border-radius: 999px;
+  background: var(--cor-fundo);
+  font-size: 0.78rem;
+  font-weight: 600;
+}
+.etiqueta--verde {
+  background: var(--cor-sucesso-fundo);
+  color: var(--cor-sucesso);
+}
+.etiqueta--cinza {
+  background: #e5e7eb;
+  color: var(--cor-texto-suave);
+}
+
+/* Avaliação: <span className="estrelas">★ 4.5</span> */
+.estrelas {
+  color: var(--cor-destaque);
+  font-weight: 700;
+}
+
+.texto-suave {
+  color: var(--cor-texto-suave);
+}
+.texto-centro {
+  text-align: center;
+}
+.mt-1 {
+  margin-top: var(--espaco-1);
+}
+.mt-2 {
+  margin-top: var(--espaco-2);
+}
+.mt-3 {
+  margin-top: var(--espaco-3);
+}
+.oculto {
+  display: none !important;
+}
+
+/* ---------- 13. Responsivo --------------------------------------------- */
+@media (max-width: 900px) {
+  .filtros {
+    grid-template-columns: 1fr 1fr;
+  }
+  .detalhe {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 600px) {
+  .filtros {
+    grid-template-columns: 1fr;
+  }
+  .form__linha {
+    grid-template-columns: 1fr;
+  }
+  .reserva {
+    grid-template-columns: 1fr;
+  }
+  .reserva__total {
+    text-align: left;
+  }
+  .navbar .container {
+    justify-content: center;
+    padding-top: var(--espaco-1);
+    padding-bottom: var(--espaco-1);
+  }
+}
+
+/* Respeita quem prefere menos animações */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
