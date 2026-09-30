@@ -1,26 +1,62 @@
 import { useState } from "react";
+import { API } from "../config";
 
 export default function Formulario({ alojamento }) {
+    // O que o utilizador escreve
     const [dataEntrada, setDataEntrada] = useState("");
     const [dataSaida, setDataSaida] = useState("");
     const [hospedes, setHospedes] = useState(1);
     const [nome, setNome] = useState("");
     const [email, setEmail] = useState("");
 
+    // O estado do formulário
+    const [erro, setErro] = useState("");
+    const [reservaFeita, setReservaFeita] = useState(null);
+    const [aEnviar, setAEnviar] = useState(false);
+
+    // Calculados a partir das datas (sem useState)
     let noites = 0;
     if (dataEntrada && dataSaida) {
-        const diferenca = new Date(dataSaida) - new Date(dataEntrada);
-        noites = diferenca / (1000 * 60 * 60 * 24);
+        noites = (new Date(dataSaida) - new Date(dataEntrada)) / (1000 * 60 * 60 * 24);
     }
     const total = noites > 0 ? noites * alojamento.precoNoite : 0;
 
-    function handleSubmit(evento) {
+    async function handleSubmit(evento) {
         evento.preventDefault();
-        console.log({ dataEntrada, dataSaida, hospedes, nome, email });
+        setErro("");
+        setReservaFeita(null);
+        setAEnviar(true);
+
+        try {
+            const resposta = await fetch(`${API}/reservas`, {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({
+                    itemId: Number(alojamento.id),
+                    dataInicio: dataEntrada,
+                    dataFim: dataSaida,
+                    quantidade: Number(hospedes),
+                    nome: nome,
+                    email: email,
+                }),
+            });
+            const dados = await resposta.json();
+
+            // 400 (dados inválidos) ou 409 (sem disponibilidade): a API diz o motivo
+            if (!resposta.ok) {
+                throw new Error(dados.erro);
+            }
+
+            setReservaFeita(dados);
+        } catch (e) {
+            setErro(e.message);
+        }
+
+        setAEnviar(false);
     }
 
     return (
-        <form className="form" onSubmit={handleSubmit}>
+        <form className="form" onSubmit={handleSubmit} noValidate>
             <div className="form__linha">
                 <div className="form__grupo">
                     <label className="form__label" htmlFor="entrada">Entrada</label>
@@ -53,8 +89,6 @@ export default function Formulario({ alojamento }) {
                     id="hospedes"
                     type="number"
                     className="input"
-                    min="1"
-                    max={alojamento.capacidade}
                     value={hospedes}
                     onChange={e => setHospedes(e.target.value)}
                 />
@@ -88,8 +122,16 @@ export default function Formulario({ alojamento }) {
                 </p>
             )}
 
-            <button type="submit" className="btn btn--primario btn--bloco">
-                Reservar
+            {erro && <p className="alerta alerta--erro">{erro}</p>}
+
+            {reservaFeita && (
+                <p className="alerta alerta--sucesso">
+                    Reserva confirmada! Total: {reservaFeita.total} €
+                </p>
+            )}
+
+            <button type="submit" className="btn btn--primario btn--bloco" disabled={aEnviar}>
+                {aEnviar ? "A reservar..." : "Reservar"}
             </button>
         </form>
     );

@@ -1,7 +1,7 @@
 // src/hooks/useReservas.js
 import { useState, useEffect } from "react";
 
-const API = "http://localhost:3001/estadias";
+import { API } from "../config";
 
 export default function useReservas() {
     const [reservas, setReservas] = useState([]);
