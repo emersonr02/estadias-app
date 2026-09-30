@@ -3,19 +3,16 @@ import { API } from "../config";
 import { guardarIdReserva } from "../utils/reservas";
 
 export default function Formulario({ alojamento }) {
-    // O que o utilizador escreve
     const [dataEntrada, setDataEntrada] = useState("");
     const [dataSaida, setDataSaida] = useState("");
     const [hospedes, setHospedes] = useState(1);
     const [nome, setNome] = useState("");
     const [email, setEmail] = useState("");
 
-    // O estado do formulário
     const [erro, setErro] = useState("");
     const [reservaFeita, setReservaFeita] = useState(null);
     const [aEnviar, setAEnviar] = useState(false);
 
-    // Calculados a partir das datas (sem useState)
     let noites = 0;
     if (dataEntrada && dataSaida) {
         noites = (new Date(dataSaida) - new Date(dataEntrada)) / (1000 * 60 * 60 * 24);
@@ -43,7 +40,6 @@ export default function Formulario({ alojamento }) {
             });
             const dados = await resposta.json();
 
-            // 400 (dados inválidos) ou 409 (sem disponibilidade): a API diz o motivo
             if (!resposta.ok) {
                 throw new Error(dados.erro);
             }
