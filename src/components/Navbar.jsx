@@ -1,4 +1,3 @@
-import '../estadia.css'
 
 function Navbar() {
     return (
