@@ -1,7 +1,12 @@
 import useReservas from "../hooks/useReservas";
+import { lerIdsReservas } from "../utils/reservas";
 
 export default function MinhasReservas() {
     const { reservas, aCarregar, erro, cancelarReserva } = useReservas();
+
+    // Só as reservas feitas neste browser
+    const ids = lerIdsReservas();
+    const minhasReservas = reservas.filter(reserva => ids.includes(reserva.id));
 
     function handleCancelar(id) {
         if (!window.confirm("Queres mesmo cancelar esta reserva?")) {
@@ -20,11 +25,11 @@ export default function MinhasReservas() {
                 <p className="estado">A carregar...</p>
             ) : erro ? (
                 <p className="alerta alerta--erro">{erro}</p>
-            ) : reservas.length === 0 ? (
+            ) : minhasReservas.length === 0 ? (
                 <p className="estado estado--vazio">Ainda não tens reservas.</p>
             ) : (
                 <div className="lista-reservas">
-                    {reservas.map(reserva => (
+                    {minhasReservas.map(reserva => (
                         <article key={reserva.id} className="reserva">
                             <div className="reserva__cabecalho">
                                 <h3>{reserva.itemNome}</h3>

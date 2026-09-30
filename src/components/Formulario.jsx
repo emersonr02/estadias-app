@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { API } from "../config";
+import { guardarIdReserva } from "../utils/reservas";
 
 export default function Formulario({ alojamento }) {
     // O que o utilizador escreve
@@ -47,6 +48,7 @@ export default function Formulario({ alojamento }) {
                 throw new Error(dados.erro);
             }
 
+            guardarIdReserva(dados.id);
             setReservaFeita(dados);
         } catch (e) {
             setErro(e.message);
