@@ -4,7 +4,6 @@ import { lerIdsReservas } from "../utils/reservas";
 export default function MinhasReservas() {
     const { reservas, aCarregar, erro, cancelarReserva } = useReservas();
 
-    // Só as reservas feitas neste browser
     const ids = lerIdsReservas();
     const minhasReservas = reservas.filter(reserva => ids.includes(reserva.id));
 
