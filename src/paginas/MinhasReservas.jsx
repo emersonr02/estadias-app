@@ -1,12 +1,54 @@
-import Layout from "./components/Layout";
-import MinhasReservas from "./paginas/MinhasReservas";
+import useReservas from "../hooks/useReservas";
 
-function App() {
+export default function MinhasReservas() {
+    const { reservas, aCarregar, erro, cancelarReserva } = useReservas();
+
+    function handleCancelar(id) {
+        if (!window.confirm("Queres mesmo cancelar esta reserva?")) {
+            return;
+        }
+        cancelarReserva(id).catch(() => {
+            alert("Não foi possível cancelar a reserva. Tenta novamente.");
+        });
+    }
+
     return (
-        <Layout>
-            <MinhasReservas />
-        </Layout>
+        <section>
+            <h2>As minhas reservas</h2>
+
+            {aCarregar ? (
+                <p className="estado">A carregar...</p>
+            ) : erro ? (
+                <p className="alerta alerta--erro">{erro}</p>
+            ) : reservas.length === 0 ? (
+                <p className="estado estado--vazio">Ainda não tens reservas.</p>
+            ) : (
+                <div className="lista-reservas">
+                    {reservas.map(reserva => (
+                        <article key={reserva.id} className="reserva">
+                            <div className="reserva__cabecalho">
+                                <h3>{reserva.itemNome}</h3>
+                            </div>
+
+                            <div className="reserva__dados">
+                                <p>Entrada: {reserva.dataInicio}</p>
+                                <p>Saída: {reserva.dataFim}</p>
+                                <p>Hóspedes: {reserva.quantidade}</p>
+                                <p>Nome: {reserva.nome}</p>
+                            </div>
+
+                            <p className="reserva__total">{reserva.total} €</p>
+
+                            <button
+                                className="btn btn--perigo"
+                                onClick={() => handleCancelar(reserva.id)}
+                            >
+                                Cancelar
+                            </button>
+                        </article>
+                    ))}
+                </div>
+            )}
+        </section>
     );
 }
-
-export default App;
