@@ -1,6 +1,6 @@
-function ButtonFavorite({favorito, onAlternar, noCard = true}) {
+function ButtonFavorite({favorito, onAlternar, noCartao = true}) {
     //o icone fica sobre a imagem apenas quando esta num card
-    const classe = noCard
+    const classe = noCartao
         ? `cartao__favorito${favorito ? " cartao__favorito--ativo" : ""}`
         : "btn btn--secundario";
 
@@ -17,7 +17,7 @@ function ButtonFavorite({favorito, onAlternar, noCard = true}) {
             aria-pressed={favorito}
         >
             <span aria-hidden="true">{favorito ? "♥" : "♡"}</span>
-            {!noCard && <span>{texto}</span>}
+            {!noCartao && <span>{texto}</span>}
         </button>
     );
 }
