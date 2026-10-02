@@ -1,17 +1,23 @@
-function ButtonFavorite({favorito, onAlternar}) {
-    return (
-        <button className={favorito ? "cartao__favorito cartao__favorito--ativo"
-            : "cartao__favorito"
-        }
-        onClick={onAlternar}
-        aria-label={
-            favorito
-            ? "Remover dos favoritos"
-            : "Adicionar aos favoritos"
-        }
-        aria-pressed={favorito}>
+function ButtonFavorite({favorito, onAlternar, noCartao = true}) {
+    //o icone fica sobre a imagem apenas quando esta num card
+    const classe = noCartao
+        ? `cartao__favorito${favorito ? " cartao__favorito--ativo" : ""}`
+        : "btn btn--secundario";
 
-            {favorito ? "♥" : "♡"}
+    const texto = favorito
+        ? "Remover dos favoritos"
+        : "Adicionar aos favoritos";
+    
+    return (
+        <button
+            type="button"
+            className={classe}
+            onClick={onAlternar}
+            aria-label={texto}
+            aria-pressed={favorito}
+        >
+            <span aria-hidden="true">{favorito ? "♥" : "♡"}</span>
+            {!noCartao && <span>{texto}</span>}
         </button>
     );
 }
