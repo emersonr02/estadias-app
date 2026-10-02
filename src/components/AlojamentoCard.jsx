@@ -1,5 +1,6 @@
 import AlojamentoImage from "./AlojamentoImage";
 import ButtonFavorite from "./ButtonFavorite";
+import Rate from "./Rate";
 
 function AlojamentoCard({
     alojamento, 
@@ -28,7 +29,7 @@ function AlojamentoCard({
                         <span className="etiqueta">{alojamento.categoria}</span>
                      </p>
 
-                     //TODO: Fazer componente avaliacao
+                     <Rate valor={alojamento.avaliacao} />
 
                      <div className="cartao__rodape">
                         <p className="cartao__preco">

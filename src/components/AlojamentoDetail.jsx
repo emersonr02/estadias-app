@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import ButtonFavorite from "./ButtonFavorite";
 import AlojamentoImage from "./AlojamentoImage";
+import Rate from "./Rate";
 
 
 function AlojamentoDetail({
@@ -80,7 +81,7 @@ function AlojamentoDetail({
                             {alojamento.localizacao} · {alojamento.categoria}
                         </p>
 
-                        //TODO: avaliacao
+                        <Rate valor={alojamento.avaliacao} />
 
                         <p className="detalhe__descricao">
                             {alojamento.descricao}
