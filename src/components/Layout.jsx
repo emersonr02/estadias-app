@@ -1,10 +1,13 @@
 import Navbar from "./Navbar";
 import Footer from "./Footer";
 
-function Layout({children}) {
+function Layout({children, onNavegar, totalFavoritos}) {
     return(
         <div className="app">
-            <Navbar />
+            <Navbar
+                onNavegar={onNavegar}
+                totalFavoritos={totalFavoritos}
+            />
                 <main className="container">
                     <div className="section">
                         {children}
