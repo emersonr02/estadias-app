@@ -2,7 +2,7 @@ import AlojamentoCard from "./AlojamentoCard";
 
 function AlojamentoList({alojamentos, 
     favoritos, 
-    onAlterarFavorito, 
+    onAlternarFavorito, 
     onVerDetalhe
 }) {
     if (alojamentos.length === 0) {
@@ -20,7 +20,7 @@ function AlojamentoList({alojamentos,
                     key={alojamento.id}
                     alojamento={alojamento}
                     favorito={favoritos.includes(alojamento.id)}
-                    onAlterarFavorito={onAlterarFavorito}
+                    onAlternarFavorito={onAlternarFavorito}
                     onVerDetalhe={onVerDetalhe} />
             ))}
         </div>
