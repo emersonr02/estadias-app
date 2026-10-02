@@ -1,8 +1,10 @@
 import { useEffect, useState } from "react";
+import {API} from "./config";
 import AlojamentoDetail from './components/AlojamentoDetail';
 import AlojamentoFilter from './components/AlojamentoFilter';
 import AlojamentoList from './components/AlojamentoList';
 import Layout from './components/Layout';
+import MinhasReservas from './components/MinhasReservas'
 
 
 function lerFavoritos() {
@@ -48,7 +50,7 @@ function App() {
         async function carregarAlojamentos() {
             try {
                 const resposta = await fetch(
-                    "http://localhost:3001/estadias/itens",
+                    `${API}/itens`,
                     { signal: controlador.signal }
                 );
 
@@ -167,7 +169,9 @@ function App() {
                 </p>
             )}
 
-            {idSelecionado !== null ? (
+            {vista === "reservas" ? (
+                <MinhasReservas />
+            ) : idSelecionado !== null ? (
                 <AlojamentoDetail
                     // Um ID diferente cria um detalhe com estado inicial novo.
                     key={idSelecionado}
