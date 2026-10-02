@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import ButtonFavorite from "./ButtonFavorite";
 import AlojamentoImage from "./AlojamentoImage";
+import Formulario from "./Formulario";
 import Rate from "./Rate";
 
 
@@ -132,6 +133,9 @@ function AlojamentoDetail({
                             noCartao={false}
                             onAlternar={() => onAlternarFavorito(id)}
                         />
+
+                        <h2 className="mt-3">Reservar</h2>
+                        <Formulario alojamento={alojamento}/>
                     </div>
                 </div>
             )}
