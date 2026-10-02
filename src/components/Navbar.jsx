@@ -36,6 +36,13 @@ function Navbar({onNavegar, totalFavoritos}) {
                             {totalFavoritos}
                         </span>
                     </a>
+                    <a
+                        className="navbar__link"
+                        href="#reservas"
+                        onClick={(evento) => navegar(evento, "reservas")}
+                    >
+                        As minhas reservas
+                    </a>
                 </div>
             </div>
         </nav>

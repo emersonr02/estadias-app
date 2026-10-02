@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import { API } from "../config";
 import ButtonFavorite from "./ButtonFavorite";
 import AlojamentoImage from "./AlojamentoImage";
 import Formulario from "./Formulario";
@@ -20,7 +21,7 @@ function AlojamentoDetail({
         async function carregarDetalhe() {
             try {
                 const resposta = await fetch(
-                    `http://localhost:3001/estadias/itens/${id}`,
+                    `${API}/itens/${id}`,
                     { signal: controlador.signal }
                 );
 
